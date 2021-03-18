@@ -1,6 +1,11 @@
+# IDE
 .idea/
+# Build outputs
 dist/
+# Terraform resource
+.terraform.lock.hcl
+.terraform/
+*.tfstate
+terraform.backend.tf.json
 terraform.tfstate
 terraform.tfvars.json
-backend.tf.json
-*.tfstate

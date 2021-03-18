@@ -1,0 +1,16 @@
+# You best set these up as env vars early
+required_vars:
+  - TF_VAR_name
+  - TF_VAR_email
+# looks like we're trying to do stuff on AWS
+aws:
+  # Will try this role name only
+  try_role_names:
+    - OrganizationAccountAccessRole
+  # implicitly required
+  account_id_var: ACCOUNT_ID
+  role_tf_var: role_arn
+  # implicitly required
+backend_key_id_var: KEY_ID
+# we keep the backend local for testing
+backend_type: local

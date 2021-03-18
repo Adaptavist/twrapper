@@ -1,0 +1,4 @@
+required_vars:
+  - TF_VAR_name
+backend_key_id_var: KEY_ID # KEY_ID is implicitly required
+backend_type: local
