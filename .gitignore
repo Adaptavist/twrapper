@@ -1,0 +1,6 @@
+.idea/
+dist/
+terraform.tfstate
+terraform.tfvars.json
+backend.tf.json
+*.tfstate
