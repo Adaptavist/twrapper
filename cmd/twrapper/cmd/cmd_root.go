@@ -14,7 +14,7 @@ var config Config
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "atw",
+	Use:   "twrapper",
 	Short: "Wrapper for initialising Terraform",
 	Long:  `Sets some things up before running Terraform in a CI environment.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -57,7 +57,7 @@ func initConfig() {
 	cwd, err := os.Getwd()
 	fatalIfNotNil(err, "%s")
 	viper.AddConfigPath(cwd)
-	viper.SetConfigName("terraform.atw.yml")
+	viper.SetConfigName("terraform.twrapper.yml")
 	viper.SetConfigType("yaml")
 
 	err = viper.ReadInConfig()

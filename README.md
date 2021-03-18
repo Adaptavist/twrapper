@@ -1,4 +1,4 @@
-# Twapper Terraform Wrapper
+# Twrapper Terraform Wrapper
 
 ## About
 
@@ -23,11 +23,11 @@ Our intentions with this wrapper
 ## Configuration
 
 ```yaml
-# module/atw.yaml
+# module/twrapper.yaml
 # error if these vars are not set or are empty
 required_vars:
   - TF_VAR_example_var_name
-# Tells ATW we are working on AWS
+# Tells Twrapper we are working on AWS
 aws:
   # If you want to provide a role to terraform, you must tell it the variable used to apply it.
   role_tf_var: aws_assume_role_arn
@@ -37,7 +37,7 @@ aws:
   try_role_names: [ OrganizationAccountAccessRole ]
   # when using try_role_names, ACCOUNT_ID must be present in the env
   account_id_var: ACCOUNT_ID
-# Tell ATW what environment variable should be used for the key_id
+# Tell Twrapper what environment variable should be used for the key_id
 backend_key_id_var: KEY_ID # VAR used to get the key id
 # Also support local for development, may add support for more in time
 backend_type: s3
@@ -54,7 +54,7 @@ backend_config:
 
 #### Required Terraform Variables
 
-You may want Terraform to validate your variables but you may be using a third-party module. So ATW
+You may want Terraform to validate your variables but you may be using a third-party module. So Twrapper
 provides a real basic feature for checking variables are set and not empty, but it will not validate
 the value beyond that.
 
@@ -107,8 +107,8 @@ aws:
 ## Usage
 
 ```bash
-atw [terraform args...]
-ats plan # run a terraform plan
-atw apply # runs an apply but adds -auto-approve
-atw destroy # runs a destroy but add -force
+twrapper [terraform args...]
+twrapper plan # run a terraform plan
+twrapper apply # runs an apply but adds -auto-approve
+twrapper destroy # runs a destroy but add -force
 ```
