@@ -17,10 +17,10 @@ var rootCmd = &cobra.Command{
 	Use:   "twrapper",
 	Short: "Wrapper for initialising Terraform",
 	Long:  `Sets some things up before running Terraform in a CI environment.`,
+	DisableFlagParsing: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := config.checkRequirements()
 		fatalIfNotNil(err, "%s")
-
 		opts := terraform.NewOpts()
 		opts.WithArguments(ActionArgs(args))
 		opts.WithBackend(config.Backend())

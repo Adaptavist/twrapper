@@ -1,0 +1,3 @@
+aws:
+backend_key_id_var: KEY_ID
+backend_type: local
