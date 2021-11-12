@@ -16,7 +16,7 @@ RUN git checkout tags/${TFENV_VERSION} -b ${TFENV_VERSION}
 FROM alpine:3
 COPY --from=build /usr/bin/twrapper /bin/twrapper
 COPY --from=tfenv /go/src/tfenv /opt/tfenv
-RUN apk update && apk add bash curl git && \
+RUN apk update && apk add bash curl git jq && \
     ln -s /opt/tfenv/bin/terraform /usr/bin && \
     ln -s /opt/tfenv/bin/tfenv /usr/bin
 ENTRYPOINT [ "/bin/twrapper" ]
