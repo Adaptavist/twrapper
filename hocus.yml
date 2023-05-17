@@ -1,0 +1,13 @@
+image:
+  buildContext: .
+  file: hocus.Dockerfile
+tasks:
+  - name: go
+    prebuild: go mod download
+vscode:
+  extensions:
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - golang.go
+    - ms-vscode.makefile-tools
+    - redhat.vscode-yaml
