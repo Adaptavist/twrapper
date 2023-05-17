@@ -1,11 +1,11 @@
-FROM golang:1.16.1-alpine AS build
+FROM golang:1.20.0-alpine AS build
 ARG DEST_DIR="/go/src/twrapper"
 COPY . $DEST_DIR
 WORKDIR $DEST_DIR
 RUN apk update && apk add git openssh
 RUN go build -o /usr/bin/twrapper ./cmd/twrapper
 
-FROM golang:1.16.1-alpine AS tfenv
+FROM golang:1.20.0-alpine AS tfenv
 ARG DEST_DIR="/go/src/tfenv"
 ARG TFENV_VERSION="v2.2.0"
 RUN apk update && apk add git openssh && \

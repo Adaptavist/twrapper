@@ -7,5 +7,7 @@ dist/
 .terraform/
 *.tfstate
 terraform.backend.tf.json
+terraform.tf.json
 terraform.tfstate
+terraform.tfstate.backup
 terraform.tfvars.json

@@ -1,3 +1,32 @@
+# Help configure an AWS session for Terraform.
 aws:
-backend_key_id_var: KEY_ID
-backend_type: local
+  # The account ID you're trying to target
+  account_id_var: AWS_ACCOUNT_ID
+  # The roles you want to try in the account set in AWS_ACCOUNT_ID
+  # or whatever you've set the var to.
+  try_role_names:
+  - role-1
+  - role-2
+  - role-3
+  # Or hardcode a role
+  role_arn: arn:aws::iam:role/myRole
+  # The terraform variable we're going to pass the role arn too.
+  role_tf_var: target_terraform_variable
+# What type of backend are we're using
+backend_type: s3
+# What's the configuration of that backend, only local and S3 supported
+backend_config:
+  bucket: backend-name
+  dynamodb_table: backend-lock
+  region: eu-ewest-1
+  encrypted: true
+# Let the user set their backend key through an environment variable
+backend_key_id_var: MY_KEY_ID
+# New Terraform cloud configuration, this should replace backend config
+cloud:
+  organization: example-org
+  workspace: example-ws
+# If there's any variables you want to set, set them here.
+# remember terraform uses the TF_VAR_ prefix.
+# E.G TF_VAR_my_var="something"
+required_vars: []

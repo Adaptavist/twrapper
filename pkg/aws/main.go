@@ -4,10 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"os"
 	"reflect"
 
-	"github.com/adaptavist/terraform-wrapper/v1/pkg/terraform"
+	"github.com/adaptavist/terraform-wrapper/v1/pkg/terraform/runner"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sts"
 )
@@ -15,16 +14,16 @@ import (
 type ConfigAWS struct {
 	RoleARN      string   `mapstructure:"role_name" yaml:"role_name"`           // RoleName specifies the role we'll hand to terraform to access its target account
 	TryRoleNames []string `mapstructure:"try_role_names" yaml:"try_role_names"` // TryRoleNames is a list of roles we try to assume if RoleName is not provided
-	AccountIDVar string   `mapstructure:"account_id_var" yaml:"account_id_var"` // Which env var is used to when using roles in RoleName and TryRoleNames
+	AccountID    string   `mapstructure:"account_id" yaml:"account_id"`         // Which env var is used to when using roles in RoleName and TryRoleNames
 	RoleTFVar    string   `mapstructure:"role_tf_var" yaml:"role_tf_var"`       // What var are we setting if we find a role
 }
 
-func (c ConfigAWS) IsEmpty() bool {
-	return reflect.DeepEqual(c, ConfigAWS{})
+func (c *ConfigAWS) IsEmpty() bool {
+	return c != nil && reflect.DeepEqual(c, ConfigAWS{})
 }
 
 // Detect for an available role and set it as a variable ready for a Terraform provider.
-func (c ConfigAWS) Configure(opts *terraform.Opts) (err error) {
+func (c ConfigAWS) Configure(opts *runner.Runner) (err error) {
 	if c.RoleTFVar == "" {
 		return errors.New("we don't know what terraform variable we need to set for the role ARN as aws.tf_role_arn is empty")
 	}
@@ -37,17 +36,11 @@ func (c ConfigAWS) Configure(opts *terraform.Opts) (err error) {
 
 	// Lets try our role names
 	if len(c.TryRoleNames) > 0 {
-		if c.AccountIDVar == "" {
-			return errors.New("aws.try_role_names requires aws.account_id_var to be aws")
+		if c.AccountID == "" {
+			return errors.New("aws.try_role_names requires aws.account_id to be aws")
 		}
 
-		accountID, ok := os.LookupEnv(c.AccountIDVar)
-
-		if !ok || accountID == "" {
-			return fmt.Errorf("%s not found or empty", c.AccountIDVar)
-		}
-
-		roleArn, err := FindRole(accountID, c.TryRoleNames)
+		roleArn, err := FindRole(c.AccountID, c.TryRoleNames)
 
 		if err != nil {
 			return err
