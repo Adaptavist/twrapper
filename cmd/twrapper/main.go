@@ -21,7 +21,9 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/adaptavist/terraform-wrapper/v1/cmd/twrapper/cmd"
+import (
+	"github.com/adaptavist/terraform-wrapper/v1/cmd/twrapper/cmd"
+)
 
 func main() {
 	cmd.Execute()

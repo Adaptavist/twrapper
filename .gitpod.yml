@@ -1,0 +1,14 @@
+
+image:
+  file: .gitpod/Dockerfile
+
+tasks:
+  - command: bash .gitpod/init.sh && go mod download && . ~/.bashrc
+
+vscode:
+  extensions:
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - golang.go
+    - ms-vscode.makefile-tools
+    - redhat.vscode-yaml

@@ -1,13 +1,7 @@
 SRC=./cmd/twrapper
 DIST=./dist
 
-test : mods
-	go test -v ./...
-
-test_quiet : mods
-	go test ./...
-
-dist: clean test
+dist: clean check
 	GOOS=darwin  GOARCH=amd64 go build -o ${DIST}/twrapper-darwin-amd64  ${SRC}
 	GOOS=darwin  GOARCH=arm64 go build -o ${DIST}/twrapper-darwin-arm64  ${SRC}
 	GOOS=linux   GOARCH=386   go build -o ${DIST}/twrapper-linux-386     ${SRC}
@@ -28,6 +22,16 @@ mods:
 	go mod download
 
 check : test
-	staticcheck ./cmd/twrapper/
-	staticcheck ./pkg/aws/
-	staticcheck ./pkg/terraform/
+	staticcheck ./...
+
+test : mods
+	go test -v ./...
+
+test_quiet : mods
+	go test ./...
+
+integration_tests:
+	go test --tags=integration_test ./...
+
+vet:
+	go vet ./...
